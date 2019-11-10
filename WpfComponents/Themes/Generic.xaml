@@ -1,0 +1,31 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:WpfComponents.CustomControls"
+    xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=System">
+    <Style TargetType="{x:Type local:FastGrid}" BasedOn="{StaticResource {x:Type DataGrid}}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:FastGrid}">
+                    <DataGrid ItemsSource="{TemplateBinding ItemsSource}"/>
+                    <!--<Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <HeaderedItemsControl ItemsSource="{TemplateBinding ItemsSource}">
+                            <HeaderedItemsControl.Resources>
+                                <DataTemplate DataType="{x:Type ComponentModel:INotifyPropertyChanged}">
+                                    <ListViewItem Content="{Binding }"/>
+                                </DataTemplate>
+                            </HeaderedItemsControl.Resources>
+                            <HeaderedItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"/>
+                                </ItemsPanelTemplate>
+                            </HeaderedItemsControl.ItemsPanel>
+                        </HeaderedItemsControl>
+                    </Border>-->
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

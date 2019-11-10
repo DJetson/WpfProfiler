@@ -1,0 +1,31 @@
+﻿<Window x:Class="UITestApp.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:WpfComponents="clr-namespace:WpfComponents.CustomControls;assembly=WpfComponents"
+        xmlns:local="clr-namespace:UITestApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <!--<ListView ItemsSource="{Binding ItemsCollection}" VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.IsVirtualizing="True">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="Id"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding IntValue}" Header="Int"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding DoubleValue}" Header="Double"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding StringValue}" Header="String"/>
+                </GridView>
+            </ListView.View>
+        </ListView>-->
+        <DataGrid ItemsSource="{Binding ItemsCollection}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Id}"/>
+                <DataGridTextColumn Binding="{Binding IntValue}"/>
+                <DataGridTextColumn Binding="{Binding DoubleValue}"/>
+                <DataGridTextColumn Binding="{Binding StringValue}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <!--<CustomGrid:FastGrid ItemsSource="{Binding ItemsCollection}"/>-->
+    </Grid>
+</Window>
