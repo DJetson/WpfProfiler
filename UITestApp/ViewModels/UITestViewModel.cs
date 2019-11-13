@@ -10,37 +10,66 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace UITestApp
+namespace UITestApp.ViewModels
 {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
+    public class UITestViewModel
     {
-        bool IsProfilingEnabled = true;
-        Stopwatch timer = new Stopwatch();
-        List<long> times = new List<long>();
+        public bool IsProfilingEnabled = true;
+        public Stopwatch timer = new Stopwatch();
+        public List<long> times = new List<long>();
 
-        int testItemCount = 250000;
-        int seed = 0;
+        public Window MainWindow { get; set; }
 
-        private void Application_Startup(object sender, StartupEventArgs e)
+        public int TestItemCount = 250000;
+        public int TestIterations = 5;
+        public int seed = 0;
+
+        public void BeginTests(int testIterations, int itemsPerTest)
         {
-            if (IsProfilingEnabled)
-                StartupWithProfiling(25);
-            else
-                StartupWithoutProfiling();
+            //Debugger.Launch();
+            //ParseCommandLine(e.Args);
+            TestItemCount = itemsPerTest;
+            TestIterations = testIterations;
+
+            //if (IsProfilingEnabled)
+                StartupWithProfiling(TestIterations);
+            //else
+            //    StartupWithoutProfiling();
         }
 
-        private void StartupWithoutProfiling()
-        {
-            MainWindow = new MainWindow() { DataContext = new MainWindowViewModel() };
-            MainWindow.Show();
-        }
+        //private void ParseCommandLine(int testIterations, int testItemsPerIteration)
+        //{
+        //    foreach (var arg in args[0].Split(new string[] { " -" },StringSplitOptions.RemoveEmptyEntries))
+        //    {
+        //        if(arg.StartsWith("ti"))
+        //        {
+        //            var valueString = arg.Remove(0, 3);
+
+        //            if (int.TryParse(valueString, out int val))
+        //                testIterations = val;
+        //        }
+        //        if (arg.StartsWith("dn"))
+        //        {
+        //            var valueString = arg.Remove(0, 3);
+
+        //            if (int.TryParse(valueString, out int val))
+        //                testItemCount = val;
+        //        }
+        //    }
+        //}
+
+        //private void StartupWithoutProfiling()
+        //{
+        //    MainWindow = new MainWindow() { DataContext = new MainWindowViewModel() };
+        //    MainWindow.Show();
+        //}
 
         private void StartupWithProfiling(int SampleSize = 5)
         {
-            var mainViewModel = new MainWindowViewModel(testItemCount, false, seed);
+            var mainViewModel = new MainWindowViewModel(TestItemCount, false, seed);
             MainWindow = new MainWindow() { DataContext = mainViewModel };
             MainWindow.ContentRendered += Win_ContentRendered;
             times.Add(timer.ElapsedMilliseconds);
@@ -56,11 +85,11 @@ namespace UITestApp
                 //Debug.WriteLine($"Elapsed Time: {timer.ElapsedMilliseconds}ms");
             }
 
-            LaunchVisualizationProcess();
+            //LaunchVisualizationProcess();
             
-            var profiler = new ProfilerCharts.Views.MainWindow() { DataContext = new ProfilerCharts.ViewModels.MainWindowViewModel(times) };
-            var tmp = MainWindow;
-            MainWindow = profiler;
+            //var profiler = new ProfilerCharts.Views.MainWindow() { DataContext = new ProfilerCharts.ViewModels.MainWindowViewModel(times) };
+            //var tmp = MainWindow;
+            //MainWindow = profiler;
             //StringBuilder args = new StringBuilder($"{times.First()}");
 
             //for(int i = 0; i < times.Count; i++)
@@ -71,8 +100,8 @@ namespace UITestApp
             //AppDomain profilerDomain = AppDomain.CreateDomain(nameof(profilerDomain));
             //profilerDomain.Load(ProfilerCharts.ViewModels.MainWindowViewModel.GetChartAssembly().FullName);
             //profilerDomain.ExecuteAssemblyByName((typeof(ProfilerCharts.App).Assembly.FullName),new string[] { args.ToString() });
-            MainWindow.Show();
-            tmp.Close();
+            //MainWindow.Show();
+            //tmp.Close();
             times.Remove(times.Min());
             times.Remove(times.Max());
 
@@ -88,7 +117,7 @@ namespace UITestApp
             timer.Stop();
             MainWindow.Hide();
 
-            var mainViewModel = new MainWindowViewModel(testItemCount, false, seed);
+            var mainViewModel = new MainWindowViewModel(TestItemCount, false, seed);
             var tmpWin = new MainWindow() { DataContext = mainViewModel };
             tmpWin.ContentRendered += Win_ContentRendered;
 

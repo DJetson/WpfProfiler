@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0E1627A7-D9B9-4E40-9E2E-6283539D1665}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>UITestApp</RootNamespace>
     <AssemblyName>UITestApp</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
@@ -34,8 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup>
-    <NoWin32Manifest>true</NoWin32Manifest>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DotNetProjects.DataVisualization.Toolkit, Version=6.0.73.0, Culture=neutral, PublicKeyToken=79778c5f2eed289b, processorArchitecture=MSIL">
@@ -57,16 +58,18 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
+    <!--<ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </ApplicationDefinition>
+    </ApplicationDefinition>-->
+    <Compile Include="Views\TestDataGrid.xaml.cs">
+      <DependentUpon>TestDataGrid.xaml</DependentUpon>
+    </Compile>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
+    <Compile Include="ViewModels\UITestViewModel.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
@@ -75,6 +78,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\TestDataGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -110,10 +117,6 @@
     <ProjectReference Include="..\MVVM.Common\MVVM.Common.csproj">
       <Project>{3f3fa45b-00ca-4ef6-90ad-61ec37915d92}</Project>
       <Name>MVVM.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ProfilerCharts\ProfilerCharts.csproj">
-      <Project>{c383747d-d549-406d-a47d-65198979466d}</Project>
-      <Name>ProfilerCharts</Name>
     </ProjectReference>
     <ProjectReference Include="..\WpfComponents\WpfComponents.csproj">
       <Project>{d57aac83-1d08-4547-bc13-a6562958bc4b}</Project>

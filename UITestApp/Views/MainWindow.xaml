@@ -18,7 +18,7 @@
                 </GridView>
             </ListView.View>
         </ListView>-->
-        <DataGrid ItemsSource="{Binding ItemsCollection}">
+        <DataGrid ItemsSource="{Binding Items}">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Id}"/>
                 <DataGridTextColumn Binding="{Binding IntValue}"/>

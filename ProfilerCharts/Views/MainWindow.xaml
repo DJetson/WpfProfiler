@@ -4,12 +4,27 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProfilerCharts"
+        xmlns:Views="clr-namespace:ProfilerCharts.Views"
         xmlns:Charts="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=DotNetProjects.DataVisualization.Toolkit"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="800" Width="1300" WindowState="Maximized">
     <Grid>
-        <Charts:Chart>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Charts:Chart Grid.Row="0">
             <Charts:LineSeries ItemsSource="{Binding DataItems}" DependentValueBinding="{Binding Value}" IndependentValueBinding="{Binding Key}"/>
         </Charts:Chart>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Views:TestSeriesSettingsView Grid.Column="0" DataContext="{Binding TestSeriesSettings}"/>
+            <Views:TestSettingsView Grid.Column="1" DataContext="{Binding TestSeriesSettings.SelectedTestItem}"/>
+        </Grid>
+        <Button Grid.Column="1" Grid.Row="2" Content="Launch" Command="{Binding LaunchCommand}" CommandParameter="{Binding }"/>
     </Grid>
 </Window>
