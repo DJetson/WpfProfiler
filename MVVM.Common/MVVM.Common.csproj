@@ -48,9 +48,10 @@
     <Compile Include="BaseClasses\NotifyBase.cs" />
     <Compile Include="Commands\BrowseCommand.cs" />
     <Compile Include="Commands\CommandParameters\BrowseCommandParameter.cs" />
-    <Compile Include="Commands\CommandParameters\DuplicateCollectionItemsCommandParameter.cs" />
-    <Compile Include="Commands\DuplicateCollectionItemCommand.cs" />
+    <Compile Include="Commands\CommandParameters\CollectionItemsCommandParameter.cs" />
+    <Compile Include="Commands\DuplicateCollectionItemsCommand.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
+    <Compile Include="Commands\RemoveCollectionItemsCommand.cs" />
     <Compile Include="Commands\RequeryBase.cs" />
     <Compile Include="Interfaces\IBrowseForFile.cs" />
     <Compile Include="Interfaces\ICanDuplicateListItems.cs" />

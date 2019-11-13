@@ -93,5 +93,21 @@ namespace ProfilerCharts.ViewModels
                 TargetTypes.Add(type);
             }
         }
+
+        public override object Clone()
+        {
+            var clone = new TestSettingsViewModel()
+            {
+                IsReadOnly = this.IsReadOnly,
+                MockDataSet = (MockDataSetViewModel)this.MockDataSet.Clone(),
+                Name = this.Name,
+                OrderId = -1,
+                Target = this.Target,
+                TargetTypes = new ObservableCollection<Type>(this.TargetTypes),
+                TestDataItemCount = this.TestDataItemCount
+            };
+
+            return clone;
+        }
     }
 }

@@ -79,6 +79,10 @@ namespace ProfilerCharts.ViewModels
         public void ExecuteTestSeriesAlt()
         {
             var mainViewModel = TestSettingsItems[nextTestIndex] as TestSettingsViewModel;
+
+            if (mainViewModel == null)
+                throw new Exception($"TestSettingsItems[{nextTestIndex}] is null or failed to successfully cast to TestSettingsViewModel type");
+
             var content = (FrameworkElement)Activator.CreateInstance(mainViewModel.Target);
             content.DataContext = mainViewModel.MockDataSet;
             content.Loaded += Content_Loaded;
@@ -87,7 +91,6 @@ namespace ProfilerCharts.ViewModels
             times.Add(timer.ElapsedMilliseconds);
             for (int i = 0; i < TestSettingsItems.Count; i++)
             {
-
                 timer.Start();
                 MainWindow.ShowDialog();
             }

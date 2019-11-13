@@ -5,11 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:p="clr-namespace:ProfilerCharts.Properties"
              xmlns:CommonCommands="clr-namespace:MVVM.Common.Commands;assembly=MVVM.Common"
+             xmlns:Commands="clr-namespace:ProfilerCharts.Commands"
              xmlns:local="clr-namespace:ProfilerCharts.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition />
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
@@ -20,11 +22,19 @@
         <Button Content="{x:Static p:Resources.GenerateRandomDataButtonPrompt}" Command="{Binding GenerateRandomizedTestCommand}"/>
         <Button Grid.Row="1" Content="Copy Items">
             <Button.CommandParameter>
-                <CommonCommands:DuplicateCollectionItemsCommandParameter ViewModel="{Binding }" CopyToCollection="{Binding TestSettingsItems}" SourceItems="{Binding SelectedItems, ElementName=TestSettingsListView}"/>
+                <CommonCommands:CollectionItemsCommandParameter ViewModel="{Binding }" TargetCollection="{Binding TestSettingsItems}" SelectedItems="{Binding SelectedItems, ElementName=TestSettingsListView}"/>
             </Button.CommandParameter>
             <Button.Command>
-                <CommonCommands:DuplicateCollectionItemCommand />
+                <Commands:DuplicateTestSettingsViewModelItemsCommand />
             </Button.Command>
+        </Button>
+        <Button Grid.Row="2" Content="Remove Items">
+            <Button.CommandParameter>
+                <CommonCommands:CollectionItemsCommandParameter ViewModel="{Binding }" TargetCollection="{Binding TestSettingsItems}" SelectedItems="{Binding SelectedItems, ElementName=TestSettingsListView}"/>
+                </Button.CommandParameter>
+                <Button.Command>
+                    <Commands:RemoveTestSettingsViewModelItemsCommand/>
+                </Button.Command>
         </Button>
         <ListView x:Name="TestSettingsListView" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" ItemsSource="{Binding TestSettingsItems}" SelectedItem="{Binding SelectedTestItem}">
             <ListView.View>

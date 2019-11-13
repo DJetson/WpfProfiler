@@ -3,26 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace MVVM.Common.Commands
 {
-    public class DuplicateCollectionItemCommand : RequeryBase
+    public class RemoveCollectionItemsCommand : RequeryBase
     {
         public override bool CanExecute(object parameter)
         {
-            if (!(parameter is DuplicateCollectionItemsCommandParameter Parameter))
+            if (!(parameter is CollectionItemsCommandParameter Parameter))
                 return false;
 
             if (Parameter?.ViewModel == null)
                 return false;
-            if (Parameter.SourceItems == null)
+            if (Parameter.SelectedItems == null)
                 return false;
-            if (Parameter.SourceItems.Count() == 0)
+            if (Parameter.SelectedItems.Count() == 0)
                 return false;
-            if (Parameter.CopyToCollection == null)
+            if (Parameter.TargetCollection == null)
                 return false;
-            if (Parameter?.CopyToCollection.Count() == 0)
+            if (Parameter?.TargetCollection.Count() == 0)
                 return false;
 
             return true;
@@ -30,10 +29,10 @@ namespace MVVM.Common.Commands
 
         public override void Execute(object parameter)
         {
-            var Parameter = parameter as DuplicateCollectionItemsCommandParameter;
+            var Parameter = parameter as CollectionItemsCommandParameter;
 
-            foreach (var item in Parameter.SourceItems)
-                Parameter.CopyToCollection.Add(item);
+            foreach (var item in Parameter.SelectedItems.ToList())
+                Parameter.TargetCollection.Remove(item);
         }
     }
 }
