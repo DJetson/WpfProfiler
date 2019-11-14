@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProfilerCharts"
+        xmlns:ViewModels="clr-namespace:ProfilerCharts.ViewModels"
         xmlns:Views="clr-namespace:ProfilerCharts.Views"
         xmlns:Charts="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=DotNetProjects.DataVisualization.Toolkit"
         mc:Ignorable="d"
@@ -14,9 +15,25 @@
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Charts:Chart Grid.Row="0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <!--<ColumnDefinition />-->
+        </Grid.ColumnDefinitions>
+        <Charts:Chart Grid.Row="0" ItemsSource="{Binding AllResults}">
+            <Charts:Chart.ItemTemplate>
+                <DataTemplate>
+                    <Charts:LineSeries DependentRangeAxis="{Binding }" ItemsSource="{Binding }" DependentValueBinding="{Binding Value}" IndependentValueBinding="{Binding Key}"/>
+                </DataTemplate>
+            </Charts:Chart.ItemTemplate>
             <Charts:LineSeries ItemsSource="{Binding DataItems}" DependentValueBinding="{Binding Value}" IndependentValueBinding="{Binding Key}"/>
         </Charts:Chart>
+        <!--<Charts:Chart Grid.Row="0" Grid.Column="1" ItemsSource="{Binding TestSeriesSettings.TestSeriesResults}">
+            <Charts:Chart.ItemTemplate>
+                <DataTemplate DataType="{x:Type ViewModels:ResultsViewModel}">
+                    <Charts:LineSeries ItemsSource="{Binding Results}" DependentValueBinding="{Binding DeltaTime}" IndependentValueBinding="{Binding Iteration}"/>
+                </DataTemplate>
+            </Charts:Chart.ItemTemplate>
+        </Charts:Chart>-->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />

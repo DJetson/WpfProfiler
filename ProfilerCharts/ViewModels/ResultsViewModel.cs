@@ -36,8 +36,14 @@ namespace ProfilerCharts.ViewModels
         public ObservableCollection<ResultItemViewModel> Results
         {
             get => _Results;
-            set { _Results = value; NotifyPropertyChanged(); }
+            set { _Results = value; NotifyPropertyChanged(); NotifyPropertyChanged(nameof(ResultsTimes)); }
         }
+
+        public ObservableCollection<long> ResultsTimes
+        {
+            get => new ObservableCollection<long>(_Results.Select(e => e.DeltaTime));
+        }
+
 
     }
 }

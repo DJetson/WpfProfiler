@@ -22,9 +22,9 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Column="0" Text="Target Assembly"/>
-        <TextBox Grid.Column="1" Text="{Binding TargetAssemblyPath}" />
-        <Button x:Name="BrowseButton" Grid.Column="2" Content="Browse..." Command="{StaticResource BrowseCommand}">
+        <!--<TextBlock Grid.Column="0" Text="Target Assembly"/>
+        <TextBox Grid.Column="1" Text="{Binding TargetAssemblyPath}" />-->
+        <Button x:Name="BrowseButton" Grid.Column="2" Content="Load Assembly..." Command="{StaticResource BrowseCommand}">
             <Button.CommandParameter>
                 <CommonCommands:BrowseCommandParameter ViewModel="{Binding DataContext, ElementName=BrowseButton}" Filter="DLL Files|*.dll" Multiselect="True"/>
             </Button.CommandParameter>
@@ -38,6 +38,6 @@
             </ListView.View>
         </ListView>
         <TextBlock Grid.Column="0" Grid.Row="2" Text="Number of Tests"/>
-        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding TestIterations}"/>
+        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Iterations}"/>
     </Grid>
 </UserControl>

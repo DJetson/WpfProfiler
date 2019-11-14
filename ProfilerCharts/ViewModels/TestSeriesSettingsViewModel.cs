@@ -71,60 +71,111 @@ namespace ProfilerCharts.ViewModels
             set { _TestSettingsItems = value; NotifyPropertyChanged(); }
         }
 
-        public List<long> times = new List<long>();
+        //public ObservableCollection<long> Times
+        //{
+        //    get => ((TestSettingsViewModel)TestSettingsItems[0]).IterationTimes;
+        //}
+
+        private ObservableCollection<ResultsViewModel> _TestSeriesResults = new ObservableCollection<ResultsViewModel>();
+        public ObservableCollection<ResultsViewModel> TestSeriesResults
+        {
+            get => _TestSeriesResults;
+            set { _TestSeriesResults = value; NotifyPropertyChanged(); }
+        }
+
+            //= new List<long>();
         public Stopwatch timer = new Stopwatch();
         private Window MainWindow;
         int nextTestIndex = 0;
 
         public void ExecuteTestSeriesAlt()
         {
-            var mainViewModel = TestSettingsItems[nextTestIndex] as TestSettingsViewModel;
-
-            if (mainViewModel == null)
-                throw new Exception($"TestSettingsItems[{nextTestIndex}] is null or failed to successfully cast to TestSettingsViewModel type");
-
-            var content = (FrameworkElement)Activator.CreateInstance(mainViewModel.Target);
-            content.DataContext = mainViewModel.MockDataSet;
-            content.Loaded += Content_Loaded;
-            MainWindow = new TestFrameworkView();
-            (MainWindow as TestFrameworkView).TargetHost.Content = content;
-            times.Add(timer.ElapsedMilliseconds);
-            for (int i = 0; i < TestSettingsItems.Count; i++)
+            foreach(var item in TestSettingsItems)
             {
-                timer.Start();
-                MainWindow.ShowDialog();
+                TestSeriesResults.Add(((TestSettingsViewModel)item).BeginTest());
             }
-            times.Remove(times.Min());
-            times.Remove(times.Max());
-
-            Debug.WriteLine($"\nAverage: {times.Average()}");
         }
 
-        private void Content_Loaded(object sender, RoutedEventArgs e)
+        //public void ExecuteTestSeriesAlt()
+        //{
+        //    var mainViewModel = TestSettingsItems[nextTestIndex] as TestSettingsViewModel;
+
+        //    if (mainViewModel == null)
+        //        throw new Exception($"TestSettingsItems[{nextTestIndex}] is null or failed to successfully cast to TestSettingsViewModel type");
+
+        //    for (int i = 0; i < TestSettingsItems.Count; i++)
+        //    {
+        //        for (int j = 0; j < mainViewModel.Iterations; j++)
+        //        {
+        //            var content = (FrameworkElement)Activator.CreateInstance(mainViewModel.Target);
+        //            content.DataContext = mainViewModel.MockDataSet;
+        //            content.Loaded += Content_Loaded;
+        //            MainWindow = new TestFrameworkView();
+        //            (MainWindow as TestFrameworkView).TargetHost.Content = content;
+        //            times.Add(timer.ElapsedMilliseconds);
+
+        //            timer.Start();
+        //            MainWindow.ShowDialog();
+        //        }
+        //    }
+        //    times.Remove(times.Min());
+        //    times.Remove(times.Max());
+
+        //    Debug.WriteLine($"\nAverage: {times.Average()}");
+        //}
+
+        //private void Content_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    timer.Stop();
+        //    MainWindow.Hide();
+        //    nextTestIndex++;
+        //    if (nextTestIndex < TestSettingsItems.Count)
+        //    {
+        //        var mainViewModel = TestSettingsItems[nextTestIndex] as TestSettingsViewModel;
+        //        var content = (FrameworkElement)Activator.CreateInstance(mainViewModel.Target);
+        //        content.DataContext = mainViewModel.MockDataSet;
+        //        content.Loaded += Content_Loaded;
+        //        var tmpWin = new TestFrameworkView();
+        //        (tmpWin as TestFrameworkView).TargetHost.Content = content;
+
+        //        MainWindow.Close();
+
+        //        MainWindow = tmpWin;
+        //    }
+        //    else
+        //    {
+        //        MainWindow.Close();
+        //    }
+        //    Times.Add(timer.ElapsedMilliseconds);
+        //    Debug.WriteLine($"T-{Times.Count - 1} = {Times.Last()}ms");
+        //    timer.Reset();
+        //}
+
+        public void EnqueueTests()
         {
-            timer.Stop();
-            MainWindow.Hide();
-            nextTestIndex++;
-            if (nextTestIndex < TestSettingsItems.Count)
-            {
-                var mainViewModel = TestSettingsItems[nextTestIndex] as TestSettingsViewModel;
-                var content = (FrameworkElement)Activator.CreateInstance(mainViewModel.Target);
-                content.DataContext = mainViewModel.MockDataSet;
-                content.Loaded += Content_Loaded;
-                var tmpWin = new TestFrameworkView();
-                (tmpWin as TestFrameworkView).TargetHost.Content = content;
+            //Queue<TestSettingsViewModel> testQueue = new Queue<TestSettingsViewModel>();
 
-                MainWindow.Close();
+            //foreach (var testSettingsItem in TestSettingsItems.Cast<TestSettingsViewModel>().OrderBy(e => e.OrderId))
+            //{
+            //    testQueue.Enqueue(testSettingsItem);
+            //}
 
-                MainWindow = tmpWin;
-            }
-            else
-            {
-                MainWindow.Close();
-            }
-            times.Add(timer.ElapsedMilliseconds);
-            Debug.WriteLine($"T-{times.Count - 1} = {times.Last()}ms");
-            timer.Reset();
+            //Task.Factory.StartNew(() =>
+            //{
+            //    while (true)
+            //    {
+            //        var action = testQueue.Dequeue();
+            //        action(resource);
+            //    }
+            //});
+
+            ////Now to do some work you simply add something to the queue...
+            //queue.Add((sb) => sb.Append("Hello"));
+            //queue.Add((sb) => sb.Append(" World"));
+
+            //queue.Add((sb) => Console.WriteLine("Content: {0}", sb.ToString()));
+
+            //Console.ReadLine();
         }
 
         private void LaunchVisualizationProcess()
