@@ -1,9 +1,10 @@
 ﻿using MVVM.Common.ViewModels;
+using ProfilerCharts.Interfaces;
 using System;
 
 namespace ProfilerCharts.ViewModels
 {
-    public class ResultItemViewModel : ViewModelBase
+    public class ResultItemViewModel : ViewModelBase, IResultItemViewModel
     {
         private int _Iteration = 0;
         public int Iteration

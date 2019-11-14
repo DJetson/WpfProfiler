@@ -1,5 +1,6 @@
 ﻿using MVVM.Common.Commands;
 using MVVM.Common.ViewModels;
+using ProfilerCharts.Interfaces;
 using ProfilerCharts.Views;
 using System;
 using System.Collections.Generic;
@@ -76,8 +77,8 @@ namespace ProfilerCharts.ViewModels
         //    get => ((TestSettingsViewModel)TestSettingsItems[0]).IterationTimes;
         //}
 
-        private ObservableCollection<ResultsViewModel> _TestSeriesResults = new ObservableCollection<ResultsViewModel>();
-        public ObservableCollection<ResultsViewModel> TestSeriesResults
+        private ObservableCollection<IResultsViewModel> _TestSeriesResults = new ObservableCollection<IResultsViewModel>();
+        public ObservableCollection<IResultsViewModel> TestSeriesResults
         {
             get => _TestSeriesResults;
             set { _TestSeriesResults = value; NotifyPropertyChanged(); }
@@ -92,7 +93,11 @@ namespace ProfilerCharts.ViewModels
         {
             foreach(var item in TestSettingsItems)
             {
-                TestSeriesResults.Add(((TestSettingsViewModel)item).BeginTest());
+                var test = ((TestSettingsViewModel)item).BeginTest();
+                var average = new AverageResultsViewModel(test.Results.Count, (long)test.Results.Average(e => e.DeltaTime));
+                average.SeriesName = $"{test.SeriesName}(Average)"; 
+                TestSeriesResults.Add(test);
+                TestSeriesResults.Add(average);
             }
         }
 

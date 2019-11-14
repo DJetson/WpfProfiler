@@ -1,5 +1,6 @@
 ﻿using MVVM.Common.Interfaces;
 using MVVM.Common.ViewModels;
+using ProfilerCharts.Interfaces;
 using ProfilerCharts.Views;
 using System;
 using System.Collections.Generic;
@@ -117,7 +118,7 @@ namespace ProfilerCharts.ViewModels
 
             var results = new ResultsViewModel() { Name = Target.Name, SettingsApplied = this, TargetType = Target };
 
-            results.Results = new ObservableCollection<ResultItemViewModel>();
+            results.Results = new ObservableCollection<IResultItemViewModel>();
 
             Queue<TestSettingsViewModel> testQueue = new Queue<TestSettingsViewModel>();
 

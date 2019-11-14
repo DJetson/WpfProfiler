@@ -1,5 +1,6 @@
 ﻿using MVVM.Common.Commands;
 using MVVM.Common.ViewModels;
+using ProfilerCharts.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -31,22 +32,21 @@ namespace ProfilerCharts.ViewModels
             set { _TestSettingsViewModel = value; NotifyPropertyChanged(); }
         }
 
-        public ObservableCollection<ObservableCollection<KeyValuePair<int, long>>> AllResults
+        public ObservableCollection<IResultsViewModel> AllResults
         {
             get
             {
-                var allResults = new ObservableCollection<ObservableCollection<KeyValuePair<int, long>>>();
-
+                var allResults = new ObservableCollection<IResultsViewModel>();
 
                 foreach(var item in TestSeriesSettings.TestSeriesResults)
                 {
-                    var testSetResults = new ObservableCollection<KeyValuePair<int, long>>();
-                    foreach(var iterationItem in item.Results)
-                    {
-                        var kvPair = new KeyValuePair<int, long>(iterationItem.Iteration, iterationItem.DeltaTime);
-                        testSetResults.Add(kvPair);
-                    }
-                    allResults.Add(testSetResults);
+                    //var testSetResults = new ObservableCollection<ResultItemViewModel>();
+                    //foreach(var iterationItem in item.Results)
+                    //{
+                    //    //var kvPair = new KeyValuePair<int, long>(iterationItem.Iteration, iterationItem.DeltaTime);
+                    //    testSetResults.Add(iterationItem);
+                    //}
+                    allResults.Add(item/*testSetResults*/);
                 }
                 return allResults;
             }

@@ -82,11 +82,15 @@
     </ApplicationDefinition>
     <Compile Include="Commands\DuplicateTestSettingsViewModelItemsCommand.cs" />
     <Compile Include="Commands\RemoveTestSettingsViewModelItemsCommand.cs" />
+    <Compile Include="Interfaces\IResultsViewModel.cs" />
     <Compile Include="Properties\Resources.en-US.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.en-US.resx</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IResultItemViewModel.cs" />
+    <Compile Include="ViewModels\AverageResultItemViewModel.cs" />
+    <Compile Include="ViewModels\AverageResultsViewModel.cs" />
     <Compile Include="ViewModels\MockDataSetViewModel.cs" />
     <Compile Include="ViewModels\TestSeriesSettingsViewModel.cs" />
     <Compile Include="Views\TestFrameworkView.xaml.cs">

@@ -20,11 +20,75 @@
             <!--<ColumnDefinition />-->
         </Grid.ColumnDefinitions>
         <Charts:Chart Grid.Row="0" ItemsSource="{Binding AllResults}">
-            <Charts:Chart.ItemTemplate>
-                <DataTemplate>
-                    <Charts:LineSeries DependentRangeAxis="{Binding }" ItemsSource="{Binding }" DependentValueBinding="{Binding Value}" IndependentValueBinding="{Binding Key}"/>
+            <Charts:Chart.Style>
+                <Style TargetType="{x:Type Charts:Chart}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding AllResults/ResultsType}" Value="{x:Type ViewModels:ResultsViewModel}">
+                            <Setter Property="ItemTemplate">
+                                <Setter.Value>
+                                    <DataTemplate>
+                                        <Charts:LineSeries ItemsSource="{Binding Results}" Title="{Binding SeriesName}" DependentValueBinding="{Binding DeltaTime}" IndependentValueBinding="{Binding Iteration}">
+                                            <Charts:LineSeries.Style>
+                                                <Style TargetType="{x:Type Charts:LineSeries}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding ResultsType}" Value="{x:Type ViewModels:ResultsViewModel}">
+                                                            <Setter Property="PolylineStyle">
+                                                                <Setter.Value>
+                                                                    <Style TargetType="{x:Type Polyline}">
+                                                                        <Style.Setters>
+                                                                            <Setter Property="StrokeDashArray" Value="1,0"/>
+                                                                            <Setter Property="StrokeThickness" Value="2"/>
+                                                                        </Style.Setters>
+                                                                    </Style>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding ResultsType}" Value="{x:Type ViewModels:AverageResultsViewModel}">
+                                                            <Setter Property="PolylineStyle">
+                                                                <Setter.Value>
+                                                                    <Style TargetType="{x:Type Polyline}">
+                                                                        <Style.Setters>
+                                                                            <Setter Property="StrokeDashArray" Value="5,3"/>
+                                                                            <Setter Property="StrokeThickness" Value="4"/>
+                                                                        </Style.Setters>
+                                                                    </Style>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Charts:LineSeries.Style>
+                                        </Charts:LineSeries>
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <!--<DataTrigger Binding="{Binding AllResults/ResultsType}" Value="{x:Type ViewModels:AverageResultsViewModel}">
+                            <Setter Property="ItemTemplate">
+                                <Setter.Value>
+                                    <DataTemplate>
+                                        <Charts:LineSeries ItemsSource="{Binding Results}" DependentValueBinding="{Binding DeltaTime}" IndependentValueBinding="{Binding Iteration}">
+                                            <Charts:LineSeries.PolylineStyle>
+                                                <Style TargetType="{x:Type Polyline}">
+                                                    <Style.Setters>
+                                                        <Setter Property="StrokeDashArray" Value="5,3"/>
+                                                    </Style.Setters>
+                                                </Style>
+                                            </Charts:LineSeries.PolylineStyle>
+                                        </Charts:LineSeries>
+
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>-->
+                    </Style.Triggers>
+                </Style>
+            </Charts:Chart.Style>
+            <!--<Charts:Chart.Resources>
+                <DataTemplate DataType="{x:Type ViewModels:ResultsViewModel}">
+                    <Charts:LineSeries ItemsSource="{Binding Results}" DependentValueBinding="{Binding DeltaTime}" IndependentValueBinding="{Binding Iteration}"/>
                 </DataTemplate>
-            </Charts:Chart.ItemTemplate>
+            </Charts:Chart.Resources>-->
             <Charts:LineSeries ItemsSource="{Binding DataItems}" DependentValueBinding="{Binding Value}" IndependentValueBinding="{Binding Key}"/>
         </Charts:Chart>
         <!--<Charts:Chart Grid.Row="0" Grid.Column="1" ItemsSource="{Binding TestSeriesSettings.TestSeriesResults}">

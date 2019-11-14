@@ -1,4 +1,5 @@
 ﻿using MVVM.Common.ViewModels;
+using ProfilerCharts.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,7 +10,7 @@ using System.Windows;
 
 namespace ProfilerCharts.ViewModels
 {
-    public class ResultsViewModel : ViewModelBase
+    public class ResultsViewModel : ViewModelBase, IResultsViewModel
     {
         private TestSettingsViewModel _SettingsApplied;
         public TestSettingsViewModel SettingsApplied
@@ -22,7 +23,7 @@ namespace ProfilerCharts.ViewModels
         public Type TargetType
         {
             get => _TargetType; 
-            set { _TargetType = value; NotifyPropertyChanged(); }
+            set { _TargetType = value; NotifyPropertyChanged(); NotifyPropertyChanged(nameof(SeriesName)); }
         }
 
         private string _Name;
@@ -32,8 +33,15 @@ namespace ProfilerCharts.ViewModels
             set { _Name = value; NotifyPropertyChanged(); }
         }
 
-        private ObservableCollection<ResultItemViewModel> _Results;
-        public ObservableCollection<ResultItemViewModel> Results
+        private string _SeriesName;
+        public string SeriesName
+        {
+            get => TargetType.Name;
+            //set { _SeriesName = value; NotifyPropertyChanged(); }
+        }
+
+        private ObservableCollection<IResultItemViewModel> _Results;
+        public ObservableCollection<IResultItemViewModel> Results
         {
             get => _Results;
             set { _Results = value; NotifyPropertyChanged(); NotifyPropertyChanged(nameof(ResultsTimes)); }
@@ -43,6 +51,8 @@ namespace ProfilerCharts.ViewModels
         {
             get => new ObservableCollection<long>(_Results.Select(e => e.DeltaTime));
         }
+
+        public Type ResultsType { get => GetType(); }
 
 
     }
